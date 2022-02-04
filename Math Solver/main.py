@@ -24,11 +24,14 @@ class main:
 
     def update(self, x):
         self.value = self.inp_box.get("1.0", END)
-        self.lvalue = len(self.value)
+        self.lvalue = len(self.value)-1
         if self.lvalue < 12: self.lvalue = 12
         self.inp_box_width = self.lvalue
+        self.inp_box.pack_forget()
+        self.inp_box = Text(self.window, width=self.inp_box_width, height=1)
         self.inp_box.pack()
-        #print(len(value))
+        self.inp_box.insert('end', self.value)
+        self.value = None
 
 if __name__ == "__main__":
     window = Tk()
