@@ -53,8 +53,9 @@ class main:
             return
 
         self.equation = self.inp_box.get("1.0", END)
-        self.equation_copy
-        print(self.equation)
+        self.equation_copy = filter(str.isdigit, self.equation)
+        self.equation_copy = "". join(self.equation_copy)
+        print(self.equation_copy)
         #messagebox.showerror("Character not found", "Please enter a character from the equation")
 
     """def update(self, x):
