@@ -53,8 +53,9 @@ class main:
             return
 
         self.equation = self.inp_box.get("1.0", END)
-        if not self.solve_for in self.equation:
-            messagebox.showerror("Character not found", "Please enter a character from the equation")
+        self.equation_copy
+        print(self.equation)
+        #messagebox.showerror("Character not found", "Please enter a character from the equation")
 
     """def update(self, x):
         self.value = self.inp_box.get("1.0", END)
