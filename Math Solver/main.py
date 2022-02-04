@@ -11,18 +11,19 @@ class main:
         self.window = window
         self.window.title("Math solver")
 
-        self.inp_box_var = StringVar()
         self.inp_box_width = 11
-        self.inp_box = Text(self.window, width=self.inp_box_width, height=1, textvariable=self.inp_box_var)
+        self.inp_box = Text(self.window, width=self.inp_box_width, height=1)
         self.inp_box.pack()
         self.inp_box.insert('end', default_values.default_equation())
-        self.update()
+
 
     def update(self):
-        value = self.inp_box.var.get()
-        print(value)
+        #value = self.inp_box.get("1.0", END)
+        #print(value)
+        print('x')
 
 if __name__ == "__main__":
     window = Tk()
     main(window)
+    window.bind("<Up>", main.update())
     window.mainloop()
