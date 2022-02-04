@@ -2,8 +2,10 @@ from libaries import *
 
 
 class main:
-    def __init__(self):
-        pass
+    def __init__(self, window):
+        self.window = window
 
 if __name__ == "__main__":
-    pass
+    window = Tk()
+    main(window)
+    window.mainloop()
