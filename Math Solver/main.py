@@ -52,6 +52,10 @@ class main:
             messagebox.showerror("To many characters", "Please enter just one character")
             return
 
+        self.equation = self.inp_box.get("1.0", END)
+        if not self.solve_for in self.equation:
+            messagebox.showerror("Character not found", "Please enter a character from the equation")
+
     """def update(self, x):
         self.value = self.inp_box.get("1.0", END)
         self.lvalue = len(self.value)-1
