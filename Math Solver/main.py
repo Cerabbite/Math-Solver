@@ -68,6 +68,7 @@ class solver:
         self.new_eq_p1 = None
 
         prev = None
+        index = 0
         for current in self.sympy_eq[0]:
             if current.isalnum() and not current.isdigit() and prev.isdigit():
                 self.new_eq_p1 += f'*{current}'
@@ -76,12 +77,37 @@ class solver:
             elif current == '^':
                 #self.new_backup = self.new_eq_p1
                 self.new_eq_p1 = self.new_eq_p1[:-1]
-                self.new_eq_p1 += f"Pow({prev}, "
+                num = 1
+                vars = ""
+                while True:
+                    var = self.sympy_eq[0][index-num]
+                    if var.isalnum():
+                        vars += var
+                    else:
+                        break
+                    num += 1
+                    if num >= index:
+                        break
+                vars = vars[::-1]
+                self.vars_new = None
+                prev2 = None
+                for i in vars:
+                    if i.isalnum() and not i.isdigit() and prev2.isdigit():
+                        self.vars_new += f'*{i}'
+                    elif not self.vars_new:
+                        self.vars_new = i
+                    else:
+                        self.vars_new += i
+                    prev2 = i
+                num -= 1
+                self.new_eq_p1 = self.new_eq_p1[:-num]
+                self.new_eq_p1 += f"Pow({self.vars_new}, "
             elif prev == "^":
                 self.new_eq_p1 += f"{current})"
             else:
                 self.new_eq_p1 += current
             prev = current
+            index += 1
 
         print(self.new_eq_p1)
 
@@ -98,7 +124,7 @@ class solver:
             prev = current
 
         print(self.new_eq_p2)
-        #print(Eq(self.sympy_eq[0], self.sympy_eq[1]))
+        print(Eq(self.new_eq_p1, self.new_eq_p2))
 
 
 
