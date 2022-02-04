@@ -5,6 +5,9 @@ class solver:
     def __init__(self):
         pass
 
+    def break_equation(self):
+        pass
+
 
 class main:
     def __init__(self, window):
