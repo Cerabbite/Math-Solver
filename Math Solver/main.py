@@ -7,16 +7,7 @@ class solver:
         self.letters_btns = []
         self.stored = None
 
-    def equation_components(self, equation, window):
-        components = {"Letters": [], "Numbers": [], "Special chars": []}
-        for i in equation:
-            if i.isdigit():
-                components['Numbers'].append(int(i))
-            elif i.isalnum():
-                components['Letters'].append(str(i))
-            else:
-                components['Special chars'].append(str(i))
-
+    def create_buttons(self, window, components):
         stored = None
         for i in self.letters_btns:
             i[0].grid_remove()
@@ -26,7 +17,8 @@ class solver:
         print(components['Letters'])
         index = 0
         for i in components['Letters']:
-            if not i in self.letters:
+            print(len(self.letters))
+            if not i in self.letters and len(self.letters) <= 2:
                 self.letters.append(i)
                 if self.stored == i:
                     btn = Button(window, width=3, text=i, command=lambda button=index: self.select_solve_for(button), bg='lightblue')
@@ -39,6 +31,18 @@ class solver:
                     self.letters_btns.append([btn, 'not-selected'])
                 index += 1
 
+    def equation_components(self, equation, window, create_btn=False):
+        components = {"Letters": [], "Numbers": [], "Special chars": []}
+        for i in equation:
+            if i.isdigit():
+                components['Numbers'].append(int(i))
+            elif i.isalnum():
+                components['Letters'].append(str(i))
+            else:
+                components['Special chars'].append(str(i))
+
+        if create_btn:
+            self.create_buttons(window, components)
         return components
 
     def select_solve_for(self, button):
@@ -58,12 +62,13 @@ class solver:
         pass
 
 
+
 class main:
     def __init__(self, window):
         self.window = window
         self.window.title("Math solver")
         self.Solver = solver()
-        self.eq_comps = self.Solver.equation_components(default_values.default_equation(), self.window)
+        self.eq_comps = self.Solver.equation_components(default_values.default_equation(), self.window, create_btn=True)
         #self.create_btn(self.letters_btns)
 
         self.equation_lbl = Label(self.window, text="Equation")
@@ -88,7 +93,7 @@ class main:
         self.bindings()
 
     def bindings(self):
-        self.eq_comps = self.window.bind("<Key>", lambda x : self.Solver.equation_components(self.inp_box.get("1.0", END), self.window))
+        self.eq_comps = self.window.bind("<Key>", lambda x : self.Solver.equation_components(self.inp_box.get("1.0", END), self.window, create_btn=True))
 
 
     def on_off(self):
