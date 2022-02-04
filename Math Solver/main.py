@@ -60,7 +60,45 @@ class solver:
             self.stored = None
 
     def solve(self, equation, window):
-        self.equation_components(equation, window)
+        #3x-4x^2+1=1
+        x, y, z = symbols('x y z')
+        self.eq_comps = self.equation_components(equation, window)
+        self.sympy_eq = equation.split('=')
+
+        self.new_eq_p1 = None
+
+        prev = None
+        for current in self.sympy_eq[0]:
+            if current.isalnum() and not current.isdigit() and prev.isdigit():
+                self.new_eq_p1 += f'*{current}'
+            elif not self.new_eq_p1:
+                self.new_eq_p1 = current
+            elif current == '^':
+                #self.new_backup = self.new_eq_p1
+                self.new_eq_p1 = self.new_eq_p1[:-1]
+                self.new_eq_p1 += f"Pow({prev}, "
+            elif prev == "^":
+                self.new_eq_p1 += f"{current})"
+            else:
+                self.new_eq_p1 += current
+            prev = current
+
+        print(self.new_eq_p1)
+
+        self.new_eq_p2 = None
+
+        prev = None
+        for current in self.sympy_eq[1]:
+            if current.isalnum() and not current.isdigit() and prev.isdigit():
+                self.new_eq_p2 += f'*{current}'
+            elif not self.new_eq_p2:
+                self.new_eq_p2 = current
+            else:
+                self.new_eq_p2 += current
+            prev = current
+
+        print(self.new_eq_p2)
+        #print(Eq(self.sympy_eq[0], self.sympy_eq[1]))
 
 
 
