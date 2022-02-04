@@ -63,9 +63,13 @@ class solver:
         #3x-4x^2+1=1
         x, y, z = symbols('x y z')
         self.eq_comps = self.equation_components(equation, window)
+        #self.sympy_eq = equation.replace('x', '*x')
+        #self.sympy_eq = self.sympy_eq.replace('y', '*y')
+        #self.sympy_eq = self.sympy_eq.replace('z', '*z')
         self.sympy_eq = equation.split('=')
-
         self.new_eq_p1 = None
+        print(self.eq_comps)
+        #print(self.sympy_eq)
 
         prev = None
         index = 0
@@ -151,7 +155,7 @@ class main:
         self.solution_lbl.grid(row=2,column=0)
 
         self.solve_btn_width = 20
-        self.solve_btn = Button(self.window, width=self.solve_btn_width, text="Solve", command=lambda equation=self.inp_box.get("1.0", END), window=self.window: self.Solver.solve(equation, window))
+        self.solve_btn = Button(self.window, width=self.solve_btn_width, text="Solve", command=self.run_solver)
         self.solve_btn.grid(row=3, column=0, columnspan=101)
         #self.inp_box.insert('end', default_values.default_equation())
 
@@ -160,6 +164,8 @@ class main:
     def bindings(self):
         self.eq_comps = self.window.bind("<Key>", lambda x : self.Solver.equation_components(self.inp_box.get("1.0", END), self.window, create_btn=True))
 
+    def run_solver(self):
+        self.Solver.solve(self.inp_box.get("1.0", END), self.window)
 
     def on_off(self):
         pass
