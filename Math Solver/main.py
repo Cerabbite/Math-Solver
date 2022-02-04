@@ -14,32 +14,33 @@ class solver:
 
         self.letters = []
         self.letters_btns = []
-        print(components['Letters'])
+        #print(components['Letters'])
         index = 0
         for i in components['Letters']:
-            print(len(self.letters))
-            if not i in self.letters and len(self.letters) <= 2:
-                self.letters.append(i)
-                if self.stored == i:
-                    btn = Button(window, width=3, text=i, command=lambda button=index: self.select_solve_for(button), bg='lightblue')
+            #print(len(self.letters))
+            if not i[0] in self.letters and len(self.letters) <= 2:
+                self.letters.append(i[0])
+                if self.stored == i[0]:
+                    btn = Button(window, width=3, text=i[0], command=lambda button=index: self.select_solve_for(button), bg='lightblue')
                     btn.grid(row=1, column=len(self.letters))
                     self.letters_btns.append([btn, 'selected'])
-                    print(i)
                 else:
-                    btn = Button(window, width=3, text=i, command=lambda button=index: self.select_solve_for(button))
+                    btn = Button(window, width=3, text=i[0], command=lambda button=index: self.select_solve_for(button))
                     btn.grid(row=1, column=len(self.letters))
                     self.letters_btns.append([btn, 'not-selected'])
                 index += 1
 
     def equation_components(self, equation, window, create_btn=False):
         components = {"Letters": [], "Numbers": [], "Special chars": []}
+        index = 0
         for i in equation:
             if i.isdigit():
-                components['Numbers'].append(int(i))
+                components['Numbers'].append([int(i), index])
             elif i.isalnum():
-                components['Letters'].append(str(i))
+                components['Letters'].append([str(i), index])
             else:
-                components['Special chars'].append(str(i))
+                components['Special chars'].append([str(i), index])
+            index += 1
 
         if create_btn:
             self.create_buttons(window, components)
@@ -59,7 +60,8 @@ class solver:
             self.stored = None
 
     def solve(self, equation, window):
-        pass
+        print('Hello')
+        print(self.equation_components(equation, window))
 
 
 
@@ -86,7 +88,7 @@ class main:
         self.solution_lbl.grid(row=2,column=0)
 
         self.solve_btn_width = 20
-        self.solve_btn = Button(self.window, width=self.solve_btn_width, text="Solve", command=self.Solver.solve(self.inp_box.get("1.0", END), self.window))
+        self.solve_btn = Button(self.window, width=self.solve_btn_width, text="Solve", command=lambda equation=self.inp_box.get("1.0", END), window=self.window: self.Solver.solve(equation, window))
         self.solve_btn.grid(row=3, column=0, columnspan=101)
         #self.inp_box.insert('end', default_values.default_equation())
 
