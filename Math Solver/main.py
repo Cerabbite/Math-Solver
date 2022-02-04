@@ -3,9 +3,10 @@ from libaries import *
 
 class solver:
     def __init__(self):
-        pass
+        self.letters = []
+        self.letters_btns = []
 
-    def equation_components(self, equation):
+    def equation_components(self, equation, window):
         components = {"Letters": [], "Numbers": [], "Special chars": []}
         for i in equation:
             if i.isdigit():
@@ -15,6 +16,17 @@ class solver:
             else:
                 components['Special chars'].append(str(i))
         print("Extracting success")
+        for i in self.letters_btns:
+            i.grid_remove()
+        self.letters = []
+        self.letters_btns = []
+        print(components['Letters'])
+        for i in components['Letters']:
+            if not i in self.letters:
+                self.letters.append(i)
+                btn = Button(window, width=3, text=i)
+                btn.grid(row=1, column=len(self.letters))
+                self.letters_btns.append(btn)
         return components
 
 
@@ -22,11 +34,9 @@ class main:
     def __init__(self, window):
         self.window = window
         self.window.title("Math solver")
-        self.letters = []
-        self.letters_btns = []
         self.Solver = solver()
-        self.eq_comps = self.Solver.equation_components(default_values.default_equation())
-        self.create_btn()
+        self.eq_comps = self.Solver.equation_components(default_values.default_equation(), self.window)
+        #self.create_btn(self.letters_btns)
 
         self.equation_lbl = Label(self.window, text="Equation")
         self.equation_lbl.grid(row=0,column=0)
@@ -50,17 +60,8 @@ class main:
         self.bindings()
 
     def bindings(self):
-        self.window.bind("<Key>", lambda x : self.Solver.equation_components(self.inp_box.get("1.0", END)))
+        self.eq_comps = self.window.bind("<Key>", lambda x : self.Solver.equation_components(self.inp_box.get("1.0", END), self.window))
 
-    def create_btn(self):
-        ###Make it update the letters list without having to run this function
-        print(self.eq_comps['Letters'])
-        for i in self.eq_comps['Letters']:
-            if not i in self.letters:
-                self.letters.append(i)
-                btn = Button(self.window, width=3, text=i)
-                btn.grid(row=1, column=len(self.letters))
-                self.letters_btns.append(btn)
 
     def on_off(self):
         pass
