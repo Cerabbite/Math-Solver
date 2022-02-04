@@ -29,6 +29,9 @@ class solver:
                 self.letters_btns.append(btn)
         return components
 
+    def solve(self, equation, window):
+        pass
+
 
 class main:
     def __init__(self, window):
@@ -53,7 +56,7 @@ class main:
         self.solution_lbl.grid(row=2,column=0)
 
         self.solve_btn_width = 20
-        self.solve_btn = Button(self.window, width=self.solve_btn_width, text="Solve", command=self.solve_eq_data)
+        self.solve_btn = Button(self.window, width=self.solve_btn_width, text="Solve", command=self.Solver.solve(self.inp_box.get("1.0", END), self.window))
         self.solve_btn.grid(row=3, column=0, columnspan=101)
         #self.inp_box.insert('end', default_values.default_equation())
 
@@ -64,10 +67,6 @@ class main:
 
 
     def on_off(self):
-        pass
-
-
-    def solve_eq_data(self):
         pass
 
     """def update(self, x):
