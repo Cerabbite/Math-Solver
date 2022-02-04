@@ -5,6 +5,7 @@ class solver:
     def __init__(self):
         self.letters = []
         self.letters_btns = []
+        self.stored = None
 
     def equation_components(self, equation, window):
         components = {"Letters": [], "Numbers": [], "Special chars": []}
@@ -15,20 +16,11 @@ class solver:
                 components['Letters'].append(str(i))
             else:
                 components['Special chars'].append(str(i))
-        print("Extracting success")
-        num = 0
+
         stored = None
         for i in self.letters_btns:
-            try:
-                if self.letters[num][1] == 'selected':
-                    stored  = self.letters[num][0]
-            except:
-                pass
-            try:
-                i.grid_remove()
-            except:
-                pass
-            num += 1
+            i[0].grid_remove()
+
         self.letters = []
         self.letters_btns = []
         print(components['Letters'])
@@ -36,11 +28,14 @@ class solver:
         for i in components['Letters']:
             if not i in self.letters:
                 self.letters.append(i)
-                btn = Button(window, width=3, text=i, command=lambda button=index: self.select_solve_for(button))
-                btn.grid(row=1, column=len(self.letters))
-                if stored:
+                if self.stored == i:
+                    btn = Button(window, width=3, text=i, command=lambda button=index: self.select_solve_for(button), bg='lightblue')
+                    btn.grid(row=1, column=len(self.letters))
                     self.letters_btns.append([btn, 'selected'])
+                    print(i)
                 else:
+                    btn = Button(window, width=3, text=i, command=lambda button=index: self.select_solve_for(button))
+                    btn.grid(row=1, column=len(self.letters))
                     self.letters_btns.append([btn, 'not-selected'])
                 index += 1
 
@@ -52,6 +47,12 @@ class solver:
             for i in range(len(self.letters_btns)):
                 if not i == button:
                     self.letters_btns[i][0].configure(bg='#f0f0f0')
+            self.letters_btns[button][1] = 'selected'
+            self.stored = self.letters[button]
+        elif self.letters_btns[button][1] == 'selected':
+            self.letters_btns[button][0].configure(bg='#f0f0f0')
+            self.letters_btns[button][1] = 'not-selected'
+            self.stored = None
 
     def solve(self, equation, window):
         pass
