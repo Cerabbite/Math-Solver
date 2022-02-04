@@ -22,20 +22,33 @@ class main:
         self.inp_box.grid(row=0, column=1)
         self.inp_box.insert('end', default_values.default_equation())
 
-        self.solvefor_lbl = Label(self.window, text="Solve for")
-        self.solvefor_lbl.grid(row=1,column=0)
+        self.solve_for_lbl = Label(self.window, text="Solve for")
+        self.solve_for_lbl.grid(row=1,column=0)
 
         self.solve_for_box_width = 25#len(default_values.default_equation())
         self.solve_for_box = Text(self.window, width=self.solve_for_box_width, height=1)
         self.solve_for_box.grid(row=1, column=1)
+
+        self.solve_btn_width = 20
+        self.solve_btn = Button(self.window, width=self.solve_btn_width, text="Solve", command=solve_eq_data)
+        self.solve_btn.grid(row=2, column=0, columnspan=2)
         #self.inp_box.insert('end', default_values.default_equation())
 
         #self.bindings()
 
     def bindings(self):
-        #window.bind("<Key>", lambda x : self.update(x))
+        window.bind("<enter>", lambda x : self.solve_eq_data(x))
         pass
 
+
+    def solve_eq_data(self, x):
+        self.solve_for = self.solve_for_box.get("1.0", END)
+        self.solve_for.replace(" ", "")
+        if self.solve_for == None or self.solve_for == "":
+            self.solve_for.insert('end', 'Please enter one character here')
+            return
+        if len(self.solve_for) > 1:
+            self.solve_for.insert('end', 'Please enter one character here')
 
     """def update(self, x):
         self.value = self.inp_box.get("1.0", END)
