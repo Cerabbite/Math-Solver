@@ -30,25 +30,27 @@ class main:
         self.solve_for_box.grid(row=1, column=1)
 
         self.solve_btn_width = 20
-        self.solve_btn = Button(self.window, width=self.solve_btn_width, text="Solve", command=solve_eq_data)
+        self.solve_btn = Button(self.window, width=self.solve_btn_width, text="Solve", command=self.solve_eq_data)
         self.solve_btn.grid(row=2, column=0, columnspan=2)
         #self.inp_box.insert('end', default_values.default_equation())
 
         #self.bindings()
 
     def bindings(self):
-        window.bind("<enter>", lambda x : self.solve_eq_data(x))
+        #window.bind("<enter>", lambda x : self.solve_eq_data(x))
         pass
 
 
-    def solve_eq_data(self, x):
+    def solve_eq_data(self):
         self.solve_for = self.solve_for_box.get("1.0", END)
+        print(self.solve_for)
         self.solve_for.replace(" ", "")
-        if self.solve_for == None or self.solve_for == "":
-            self.solve_for.insert('end', 'Please enter one character here')
+        if self.solve_for_box.compare("end-1c", "==", "1.0"):
+            messagebox.showerror("Empty", "Please enter one character")
             return
-        if len(self.solve_for) > 1:
-            self.solve_for.insert('end', 'Please enter one character here')
+        if len(self.solve_for_box.get("1.0", 'end-1c')) > 1:
+            messagebox.showerror("To many characters", "Please enter just one character")
+            return
 
     """def update(self, x):
         self.value = self.inp_box.get("1.0", END)
