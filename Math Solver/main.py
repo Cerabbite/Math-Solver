@@ -13,6 +13,7 @@ class main:
 
         self.inp_box = Text(self.window, width=10)
         self.inp_box.pack()
+        self.inp_box.insert('end', settings)
 
 if __name__ == "__main__":
     window = Tk()
