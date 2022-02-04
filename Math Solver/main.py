@@ -11,7 +11,7 @@ class main:
         self.window = window
         self.window.title("Math solver")
 
-        self.inp_box = Text(self.window, width=10)
+        self.inp_box = Text(self.window, width=13, height=10)
         self.inp_box.pack()
         self.inp_box.insert('end', default_values.default_equation())
 
