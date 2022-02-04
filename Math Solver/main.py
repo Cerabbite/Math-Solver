@@ -60,8 +60,7 @@ class solver:
             self.stored = None
 
     def solve(self, equation, window):
-        print('Hello')
-        print(self.equation_components(equation, window))
+        self.equation_components(equation, window)
 
 
 
