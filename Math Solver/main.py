@@ -16,18 +16,42 @@ class solver:
             else:
                 components['Special chars'].append(str(i))
         print("Extracting success")
+        num = 0
+        stored = None
         for i in self.letters_btns:
-            i.grid_remove()
+            try:
+                if self.letters[num][1] == 'selected':
+                    stored  = self.letters[num][0]
+            except:
+                pass
+            try:
+                i.grid_remove()
+            except:
+                pass
+            num += 1
         self.letters = []
         self.letters_btns = []
         print(components['Letters'])
+        index = 0
         for i in components['Letters']:
             if not i in self.letters:
                 self.letters.append(i)
-                btn = Button(window, width=3, text=i)
+                btn = Button(window, width=3, text=i, command=lambda button=index: self.select_solve_for(button))
                 btn.grid(row=1, column=len(self.letters))
-                self.letters_btns.append(btn)
+                if stored:
+                    self.letters_btns.append([btn, 'selected'])
+                else:
+                    self.letters_btns.append([btn, 'not-selected'])
+                index += 1
+
         return components
+
+    def select_solve_for(self, button):
+        if self.letters_btns[button][1] == 'not-selected':
+            self.letters_btns[button][0].configure(bg='lightblue')
+            for i in range(len(self.letters_btns)):
+                if not i == button:
+                    self.letters_btns[i][0].configure(bg='#f0f0f0')
 
     def solve(self, equation, window):
         pass
