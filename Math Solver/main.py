@@ -128,6 +128,7 @@ class solver:
             prev = current
 
         print(self.new_eq_p2)
+        #self.new_eq_p1 = sympify(self.new_eq_p1, evaluate=False)
         print(Eq(self.new_eq_p1, self.new_eq_p2))
 
 
